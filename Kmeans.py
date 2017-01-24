@@ -51,4 +51,7 @@ def kmeans(data,nclust):
     data_out=data.copy()
     data_out['Cluster Class']=pd.Series(model.labels_,index=data_out.index)
     data_out=pd.concat([data_out, md.set_index(data_out.index[:len(md)])],axis=1)
+    clcent=pd.DataFrame(model.cluster_centers_,columns=range(1,33),index=('Center 0','Center 1','Center 2','Center 3'))
+    data_out=pd.concat([data_out,clcent])
+    
     
