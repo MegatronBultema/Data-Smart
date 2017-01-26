@@ -1,0 +1,20 @@
+Before this branch I had completed writing a program that could read in Offer Information and Transactions sheets from an excel sheet
+and cluster the buyers behavior using KMeans analysis as implimented by sklearn. I noticed that the cluster centers included negative values. In the example given using excel solver in Data Smart the solver inputs are written to minimize the total distance to cluster center valueswith the constriant that the cluster centers be values between 0 and 1. In trying to find a way to constrain the cluster centers I realized that I should be using spherical K-means clustering instead of standard K-means clustering which calculates based on Euclidean distance. 
+
+Will spherical K-means inharently give values between 0 and 1 given my data? I think it will given that it is working on a cosine function.
+   info on cosine similarity and other similarity measurements
+    http://dataaspirant.com/2015/04/11/five-most-popular-similarity-measures-implementation-in-python/
+    Cosine similarity metric finds the normalized dot product of the two attributes. By determining the cosine similarity, we would effectively try to find the cosine of the angle between the two objects. The cosine of 0° is 1, and it is less than 1 for any other angle. It is thus a judgement of orientation and not magnitude: two vectors with the same orientation have a cosine similarity of 1, two vectors at 90° have a similarity of 0, and two vectors diametrically opposed have a similarity of -1, independent of their magnitude. Cosine similarity is particularly used in positive space, where the outcome is neatly bounded in [0,1]. One of the reasons for the popularity of cosine similarity is that it is very efficient to evaluate, especially for sparse vectors.
+
+Well.... finding a spherical kmeans program in python is harder than I expected.
+Spectral has a kmeans using Manhatten distance: http://www.spectralpython.net/class_func_ref.html?highlight=kmeans#spectral.kmeans
+Spherecluster seems to have one here: spherecluster 0.1.2, https://pypi.python.org/pypi/spherecluster/0.1.2
+  Actually this is perfect because usage is same as sklearn!!
+
+
+Okay, got it loaded and working. Cluster centers are different than example in book. Mainly, there are many cluster center numbers showing 0.00000. Maybe because of significant digits but I think it is the that the similarity is 90° and therefore the cosine(90°)=0. 
+
+Current build is limited at 4 clusters becuase of labeling it into the DataFrame. Will fix this next.
+
+Okay, now the user can input the excel file and sheet names for transactions and offer information and number of clusters. 
+Need to clean up the code and document.
